@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Maybe Spring Rolls</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    {% load static %}
+    <script src="{% static 'places/js/javascript.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz9YLNIdpPdz8ZKdsB0oeNabz_FwvCpJM&libraries=places&callback=initMap" async defer></script>
+    <link rel="stylesheet" href="{% static 'places/css/style.css' %}">
+  </head>
+  <body>
+
+    <div class="left_pane">
+
+      <div id="map"></div>
+    </div>
+    <div class="right_pane">
+      {% if request.session.current_user %}
+        <h2>Hello, {{ request.session.current_user.first_name }}!</h2>
+        <form action="{% url 'log_reg:logout' %}" method="post">
+          {% csrf_token %}
+          <input type="submit" name="logout" value="Logout">
+        </form>
+      {% else %}
+        <form action="{% url 'log_reg:index' %}" method="post">
+          {% csrf_token %}
+          <input type="submit" name="login/Register" value="Login/Register">
+        </form>
+      {% endif %}
+      <div id="current_place"></div>
+      <button onclick="searchAll()">I'm down for anything!</button>
+      <form action="javascript:restaurantSearch()" method="post">
+        Food Type:
+        <select name="restaurant_type" id="restaurant_type">
+          {% for i in restaurant_types %}
+          <option value="{{i}}">{{i}}</option>
+          {% endfor %}
+        </select>
+        Distance:
+        <select name="distance" id="distance">
+          <option value="1" selected="selected">1 mile</option>
+          {% for i in distance_loop %}
+            <option value="{{i}}">{{i}} miles</option>
+          {% endfor %}
+
+        </select>
+        Price Range:
+        <select name="min_price" id="min_price">
+          <option value="0" selected="selected">$</option>
+          <option value="1">$$</option>
+          <option value="2">$$$</option>
+          <option value="3">$$$$</option>
+          <option value="4">$$$$$</option>
+        </select>
+        to
+        <select name="max_price" id="max_price">
+          <option value="0">$</option>
+          <option value="1">$$</option>
+          <option value="2">$$$</option>
+          <option value="3">$$$$</option>
+          <option value="4" selected="selected">$$$$$</option>
+        </select>
+        Open right now?
+        <select name="open_now" id="open_now">
+          <option value="True" selected="selected">Yes</option>
+          <option value="False">No</option>
+        </select>
+        <input type="submit" name="submit" value="Eat Something!">
+
+      </form>
+    </div>
+
+  </body>
+</html>

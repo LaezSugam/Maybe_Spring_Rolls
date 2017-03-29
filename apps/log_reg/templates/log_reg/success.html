@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Success!</title>
+  </head>
+  <body>
+    <h2>Success! Welcome, {{ request.session.current_user.first_name }}!</h2>
+    <p>Successfully registered (or logged in)!</p>
+    <form action="{% url 'log_reg:logout' %}" method="post">
+      {% csrf_token %}
+      <input type="submit" name="logout" value="Logout">
+    </form>
+    <a href="{% url 'places:index' %}">Back to the map!</a>
+  </body>
+</html>
