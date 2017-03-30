@@ -34,6 +34,13 @@ html, body {
   display: inline-block;
   vertical-align: top;
   overflow-y: scroll;
+  overflow-x: hidden;
+  /*background: linear-gradient(#00CC00, #FFFFFF);*/
+}
+
+.right_pane h2, h3 {
+  padding-left: 20px;
+  margin-top: 0px;
 }
 
 .logo {
@@ -60,15 +67,29 @@ html, body {
 }
 
 #current_place {
+  margin-bottom: -10px;
 
 }
 
 #current_place img {
   height: 200px;
-  width: 100%;
+  width: 105%;
   object-fit: cover;
   padding: 0px;
-  margin: 0px;
+  margin: 0px -10px;
+}
+
+.bigButton {
+  width: 100%;
+  border: 0;
+  background-color: #FF9640;
+  color: #FFFFFF;
+  padding: 10px;
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .details {
@@ -82,11 +103,13 @@ html, body {
 .details h3, p {
   margin-top: 0px;
   margin-bottom: 5px;
+  margin-left: 0px;
+  padding-left: 0px;
 }
 
 .details h4 {
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .details a{
@@ -97,10 +120,48 @@ html, body {
   text-decoration: none;
   margin: 0px -20px;
   padding: 10px 20px;
+  text-align: center;
 }
 
 .openHours {
   list-style: none;
   padding-left: 10px;
   margin-top: 0px;
+}
+
+.options {
+  display: inline-block;
+  padding: 0px 20px 20px;
+  width: 40%;
+}
+
+.options h5 {
+  margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.mealList {
+  width: 100%;
+  margin-left: 20px;
+}
+
+.mealList td {
+  padding: 5px;
+}
+
+.mealList form {
+  display: inline-block;
+}
+
+.mealList input[type=submit] {
+  color: red;
+  margin-right: 5px;
+  background-color:  #F3F3F3;
+
 }

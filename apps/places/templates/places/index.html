@@ -16,6 +16,7 @@
     <script src="{% static 'places/js/javascript.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz9YLNIdpPdz8ZKdsB0oeNabz_FwvCpJM&libraries=places&callback=initMap" async defer></script>
     <link rel="stylesheet" href="{% static 'places/css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'places/image/msr_favicon.png' %}">
   </head>
   <body>
 
@@ -48,67 +49,70 @@
         <img src="{% static 'places/image/msr_logo_med.png' %}" alt="Maybe Spring Rolls" class="logo">
       </div>
       <div id="current_place"></div>
-      <button onclick="searchAll()">I'm down for anything!</button>
+      <button class="bigButton" onclick="searchAll()">I'm down for anything!</button>
       <form action="javascript:restaurantSearch()" method="post">
-        Food Type:
-        <select name="restaurant_type" id="restaurant_type">
-          {% for i in restaurant_types %}
-          <option value="{{i}}">{{i}}</option>
-          {% endfor %}
-        </select>
-        Distance:
-        <select name="distance" id="distance">
-          <option value="1" selected="selected">1 mile</option>
-          {% for i in distance_loop %}
-            <option value="{{i}}">{{i}} miles</option>
-          {% endfor %}
+        <div class="options">
+          <h5>Food Type:</h5>
+          <select name="restaurant_type" id="restaurant_type">
+            {% for i in restaurant_types %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="options">
+          <h5>Distance:</h5>
+          <select name="distance" id="distance">
+            <option value="1" selected="selected">1 mile</option>
+            {% for i in distance_loop %}
+              <option value="{{i}}">{{i}} miles</option>
+            {% endfor %}
 
-        </select>
-        Price Range:
-        <select name="min_price" id="min_price">
-          <option value="0" selected="selected">$</option>
-          <option value="1">$$</option>
-          <option value="2">$$$</option>
-          <option value="3">$$$$</option>
-          <option value="4">$$$$$</option>
-        </select>
-        to
-        <select name="max_price" id="max_price">
-          <option value="0">$</option>
-          <option value="1">$$</option>
-          <option value="2">$$$</option>
-          <option value="3">$$$$</option>
-          <option value="4" selected="selected">$$$$$</option>
-        </select>
-        Open right now?
-        <select name="open_now" id="open_now">
-          <option value="True" selected="selected">Yes</option>
-          <option value="False">No</option>
-        </select>
-        <input type="submit" name="submit" value="Eat Something!">
-
+          </select>
+        </div>
+        <div class="options">
+          <h5>Price Range:</h5>
+          <select name="min_price" id="min_price">
+            <option value="0" selected="selected">$</option>
+            <option value="1">$$</option>
+            <option value="2">$$$</option>
+            <option value="3">$$$$</option>
+            <option value="4">$$$$$</option>
+          </select>
+          to
+          <select name="max_price" id="max_price">
+            <option value="0">$</option>
+            <option value="1">$$</option>
+            <option value="2">$$$</option>
+            <option value="3">$$$$</option>
+            <option value="4" selected="selected">$$$$$</option>
+          </select>
+        </div>
+        <div class="options">
+          <h5> Open right now?</h5>
+            <select name="open_now" id="open_now">
+              <option value="True" selected="selected">Yes</option>
+              <option value="False">No</option>
+            </select>
+          </div>
+        <p><input class="bigButton" type="submit" name="submit" value="Eat Something!"></p>
       </form>
 
         {% if request.session.current_user %}
         <h2>Your Meal List</h2>
-          {% if messages %}
+          <!-- {% if messages %}
             {% for message in messages %}
               <h3>{{ message }}</h3>
             {% endfor %}
-          {% endif %}
-          <table>
-            <thead>
-              <tr>
-                <th>Meal</th><th>Action</th>
-              </tr>
-            </thead>
+          {% endif %} -->
+          <table class="mealList">
+
             <tbody>
               {% for meal in meal_list %}
                 <tr>
-                  <td>{{meal.meal}}</td><td><form action="{% url 'places:remove_meal' meal_id=meal.id %}" method="post">
+                  <td><form action="{% url 'places:remove_meal' meal_id=meal.id %}" method="post">
                               {% csrf_token %}
-                              <input type="submit" name="remove_meal" value="Remove Meal">
-                            </form></td>
+                              <input type="submit" name="remove_meal" value="&#10008;">
+                            </form>{{meal.meal}}</td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -116,8 +120,8 @@
 
           <form action="{% url 'places:add_meal' %}" method="post">
             {% csrf_token %}
-            <input type="text" name="meal">
-            <input type="submit" name="add_meal" value="Add Meal">
+            <input type="text" name="meal" placeholder="Type a meal to add to your list here.">
+            <input class="bigButton" type="submit" name="add_meal" value="Add Meal!">
           </form>
         {% endif %}
     </div>

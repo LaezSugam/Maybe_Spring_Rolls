@@ -3,29 +3,56 @@
   <head>
     <meta charset="utf-8">
     <title>Login and Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'log_reg/css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'log_reg/image/msr_favicon.png' %}">
   </head>
   <body>
-    {% if messages %}
-      {% for message in messages %}
-        <h2>{{ message }}</h2>
-      {% endfor %}
-    {% endif %}
-    <h2>Registration</h2>
-    <form action="{% url 'log_reg:register' %}" method="post">
-      {% csrf_token %}
-      <label for="first_name">First Name: <input type="text" name="first_name" id="first_name"></label>
-      <label for="last_name">Last Name: <input type="text" name="last_name" id="last_name"></label>
-      <label for="email">Email: <input type="text" name="email" id="email"></label>
-      <label for="password">Password: <input type="password" name="password" id="password"></label>
-      <label for="confirm_password">Confirm Password: <input type="password" name="confirm_password" id="confirm_password"></label>
-      <input type="submit" name="register" value="Register">
-    </form>
-    <h2>Login</h2>
-    <form action="{% url 'log_reg:login' %}" method="post">
-      {% csrf_token %}
-      <label for="email">Email: <input type="text" name="email" id="email"></label>
-      <label for="password">Password: <input type="password" name="password" id="password"></label>
-      <input type="submit" name="login" value="Login">
-    </form>
+    <div class="wrapper">
+      {% if messages %}
+        {% for message in messages %}
+          <h2>{{ message }}</h2>
+        {% endfor %}
+      {% endif %}
+      <div id="login" class="logReg">
+        <h2>Login</h2>
+        <form action="{% url 'log_reg:login' %}" method="post">
+          {% csrf_token %}
+          <table>
+            <tr>
+              <td>Email: </td><td><input type="text" name="email" id="email"></td>
+            </tr>
+            <tr>
+              <td>Password:</td><td><input type="password" name="password" id="password"></td>
+            </tr>
+            <tr>
+              <td colspan="2"><input type="submit" name="login" value="Login"></td>
+            </tr>
+
+          </table>
+        </form>
+        <a href="{% url 'places:index' %}">Nevermind, take me back!</a>
+      </div>
+      <div id="register" class="logReg">
+        <h2>Registration</h2>
+        <form action="{% url 'log_reg:register' %}" method="post">
+          {% csrf_token %}
+          <table>
+            <tr>
+              <td>First Name: </td><td><input type="text" name="first_name" id="first_name"></td>
+            </tr><tr><td>Last Name:</td><td><input type="text" name="last_name" id="last_name"></td>
+              </tr><tr><td>Email:</td><td><input type="text" name="email" id="email"></td>
+              </tr><tr><td>Password:</td><td><input type="password" name="password" id="password"></td>
+              </tr><tr><td>Confirm Password:</td><td><input type="password" name="confirm_password" id="confirm_password"></td>
+              </tr><tr><td colspan="2">
+                <input type="submit" name="register" value="Register">
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+
+
+    </div>
   </body>
 </html>
