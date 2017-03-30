@@ -35,7 +35,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function restaurantSearch() {
-
+  document.getElementById("current_place").innerHTML = "";
   map = new google.maps.Map(document.getElementById('map'), {
       center: pos,
       zoom: 15
@@ -78,7 +78,7 @@ function restaurantSearch() {
 }
 
 function searchAll() {
-
+  document.getElementById("current_place").innerHTML = "";
   map = new google.maps.Map(document.getElementById('map'), {
       center: pos,
       zoom: 15
@@ -105,6 +105,17 @@ function pickPlace(results, status) {
   }
   else {
     console.log("It's not okay!")
+    if (meals_from_django){
+      var meal_arr = [];
+      for(i in meals_from_django){
+        meal_arr.push(meals_from_django[i]);
+      }
+      var your_meal = meal_arr[Math.floor(Math.random() * meal_arr.length)];
+      alert("Your search criteria didn't return any results.  Maybe you should make " + your_meal + "?");
+    }
+    else {
+      alert("Your search didn't return any results, and you don't appear to have a meal list.  Guess you're going hungry tonight.")
+    }
   }
 }
 
@@ -135,10 +146,18 @@ function createMarker(place) {
       if (place.photos){
         newHTML += "<img src='" + place.photos[0].getUrl({'maxWidth': 500, 'maxHeight': 500}) + "' width='100%' /><br />"
       }
-      newHTML += "<b>" + place.name + "</b><br />" + place.vicinity + "<br />" + place.formatted_phone_number + "<br />" + place.rating + "<br />";
-      for(i in place.opening_hours.weekday_text){
-        newHTML += place.opening_hours.weekday_text[i] + "<br />"
+      newHTML += "<div class='details'><h3>" + place.name + "</h3><p class='address'>" + place.vicinity + "</p><p class='phoneNumber'>" + place.formatted_phone_number + "</p><p class='rating'>";
+      for (var i = 0; i < Math.floor(place.rating); i++){
+        newHTML += "&#9733;"
       }
-      newHTML += "<a href='" + place.url + "'>Open in Google Maps</a>"
+      newHTML += " " + place.rating + "</p>";
+      if (place.opening_hours){
+        newHTML += "<h4>Hours of Operation</h4><ul class='openHours'>"
+        for(i in place.opening_hours.weekday_text){
+          newHTML += "<li>" + place.opening_hours.weekday_text[i] + "</li>"
+        }
+        newHTML += "</ul>"
+      }
+      newHTML += "<a href='" + place.url + "'>Open in Google Maps &#8618;</a></div>"
       document.getElementById("current_place").innerHTML = newHTML;
     };

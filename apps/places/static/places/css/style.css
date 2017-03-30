@@ -1,6 +1,13 @@
+*{
+  font-family: Arial, Helvetica, "Courier-New", sans-serif;
+  /*outline: 1px solid red;*/
+}
+
 #map {
   height: 100%;
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -10,15 +17,90 @@ html, body {
 }
 
 .left_pane {
-  width: 79%;
+  width: 75%;
   height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+}
+
+.right_pane {
+  width:25%;
+  height:100%;
+  padding: 0;
+  margin: 0;
+  margin-left: -5px;
+  display: inline-block;
+  vertical-align: top;
+  overflow-y: scroll;
+}
+
+.logo {
+  width: 24%;
   display: inline-block;
   vertical-align: top;
 }
 
-.right_pane {
-  width:19%;
-  height:100%;
+.userLogoBox {
+  background-color: #00CC00;
+  width: 100%;
+  padding: 5px;
+}
+
+.userLogoBox form, h2 {
+  display: inline-block;
+}
+
+.userBox {
+  width: 73%;
+  overflow-x: hidden;
   display: inline-block;
   vertical-align: top;
+}
+
+#current_place {
+
+}
+
+#current_place img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  padding: 0px;
+  margin: 0px;
+}
+
+.details {
+  background-color: #269926;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  padding: 10px 20px 0px 20px;
+  color: #FFFFFF;
+}
+
+.details h3, p {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.details h4 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.details a{
+  background-color: #4285F4;
+  display: block;
+  color: #FFFFFF;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0px -20px;
+  padding: 10px 20px;
+}
+
+.openHours {
+  list-style: none;
+  padding-left: 10px;
+  margin-top: 0px;
 }

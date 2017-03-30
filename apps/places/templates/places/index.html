@@ -5,6 +5,14 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     {% load static %}
+
+    <script type="text/javascript">
+      var meals_from_django;
+      {% if meals_for_js %}
+      meals_from_django = {% autoescape off %}{{meals_for_js}}{% endautoescape %};
+      {% endif %}
+    </script>
+
     <script src="{% static 'places/js/javascript.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz9YLNIdpPdz8ZKdsB0oeNabz_FwvCpJM&libraries=places&callback=initMap" async defer></script>
     <link rel="stylesheet" href="{% static 'places/css/style.css' %}">
@@ -14,20 +22,31 @@
     <div class="left_pane">
 
       <div id="map"></div>
+
     </div>
+
     <div class="right_pane">
-      {% if request.session.current_user %}
-        <h2>Hello, {{ request.session.current_user.first_name }}!</h2>
-        <form action="{% url 'log_reg:logout' %}" method="post">
-          {% csrf_token %}
-          <input type="submit" name="logout" value="Logout">
-        </form>
-      {% else %}
-        <form action="{% url 'log_reg:index' %}" method="post">
-          {% csrf_token %}
-          <input type="submit" name="login/Register" value="Login/Register">
-        </form>
-      {% endif %}
+
+      <div class="userLogoBox">
+        {% if request.session.current_user %}
+          <div class="userBox">
+            <h2>Hello, {{ request.session.current_user.first_name }}!</h2>
+            <form action="{% url 'log_reg:logout' %}" method="post">
+              {% csrf_token %}
+              <input type="submit" name="logout" value="Logout">
+            </form>
+          </div>
+
+        {% else %}
+          <div class="userBox">
+            <form action="{% url 'log_reg:index' %}" method="post">
+              {% csrf_token %}
+              <input type="submit" name="login/Register" value="Login/Register">
+            </form>
+          </div>
+        {% endif %}
+        <img src="{% static 'places/image/msr_logo_med.png' %}" alt="Maybe Spring Rolls" class="logo">
+      </div>
       <div id="current_place"></div>
       <button onclick="searchAll()">I'm down for anything!</button>
       <form action="javascript:restaurantSearch()" method="post">
@@ -69,6 +88,38 @@
         <input type="submit" name="submit" value="Eat Something!">
 
       </form>
+
+        {% if request.session.current_user %}
+        <h2>Your Meal List</h2>
+          {% if messages %}
+            {% for message in messages %}
+              <h3>{{ message }}</h3>
+            {% endfor %}
+          {% endif %}
+          <table>
+            <thead>
+              <tr>
+                <th>Meal</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for meal in meal_list %}
+                <tr>
+                  <td>{{meal.meal}}</td><td><form action="{% url 'places:remove_meal' meal_id=meal.id %}" method="post">
+                              {% csrf_token %}
+                              <input type="submit" name="remove_meal" value="Remove Meal">
+                            </form></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <form action="{% url 'places:add_meal' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="meal">
+            <input type="submit" name="add_meal" value="Add Meal">
+          </form>
+        {% endif %}
     </div>
 
   </body>

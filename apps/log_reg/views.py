@@ -17,7 +17,7 @@ def register(request):
         "first_name" : new_user[1].first_name,
         "last_name" : new_user[1].last_name
         }
-        return redirect("log_reg:success")
+        return redirect("places:index")
     else:
         for mes in new_user[1]:
             messages.error(request, mes)
@@ -33,7 +33,7 @@ def login(request):
         "first_name" : login_attempt[1].first_name,
         "last_name" : login_attempt[1].last_name
         }
-        return redirect("log_reg:success")
+        return redirect("places:index")
     else:
         messages.error(request, login_attempt[1])
         return redirect("log_reg:index")
