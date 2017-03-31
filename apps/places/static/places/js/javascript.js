@@ -14,16 +14,16 @@ function initMap() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-
-
       map.setCenter(pos);
       map.setZoom(15);
 
     }, function() {
+      alert("Geolocation must be enabled to use this application.");
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
     // Browser doesn't support Geolocation
+    alert("Geolocation must be enabled to use this application.");
     handleLocationError(false, infoWindow, map.getCenter());
   }
 }
